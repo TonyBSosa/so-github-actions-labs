@@ -1,15 +1,53 @@
 name: Multi-OS System Check
 
 on:
+  push:
   workflow_dispatch:
 
 jobs:
-  test-basic:
-    runs-on: ubuntu-latest
+  system-info:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
+
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Run basic command
-        run: echo "Workflow iniciado correctamente"
+      # Linux & macOS
+      - name: Show system info (Linux/Mac)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          echo "=== SISTEMA OPERATIVO ==="
+          uname -a
+          echo "=== ARQUITECTURA ==="
+          uname -m
+          echo "=== VARIABLES DE ENTORNO ==="
+          env
 
+      # Windows
+      - name: Show system info (Windows)
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: |
+          Write-Output "=== SISTEMA OPERATIVO ==="
+          systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
+          Write-Output "=== ARQUITECTURA ==="
+          echo $Env:PROCESSOR_ARCHITECTURE
+          Write-Output "=== VARIABLES DE ENTORNO ==="
+          Get-ChildItem Env:
+
+      - name: Save system info to file
+        shell: bash
+        run: |
+          echo "SO: ${{ runner.os }}" > system-info.txt
+          echo "Arquitectura: $(uname -m 2>/dev/null || echo $Env:PROCESSOR_ARCHITECTURE)" >> system-info.txt
+
+      - name: Upload system info
+        uses: actions/upload-artifact@v4
+        with:
+          name: system-info-${{ matrix.os }}
+          path: system-info.txt
