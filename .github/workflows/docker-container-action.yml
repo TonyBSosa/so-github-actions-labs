@@ -1,0 +1,18 @@
+name: Docker Container Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  docker-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t my-test-image ./docker
+
+      - name: Run container
+        run: docker run my-test-image
