@@ -14,5 +14,33 @@ jobs:
       - name: Build Docker image
         run: docker build -t my-test-image ./docker
 
-      - name: Run container
-        run: docker run my-test-image
+      - name: Create shared folder
+        run: mkdir -p shared-data
+
+      - name: Run container with env and volume
+        run: |
+          docker run --name my-test-container \
+            -e HOST_MESSAGE="Hola, soy el host (GitHub runner)" \
+            -v ${{ github.workspace }}/shared-data:/data \
+            my-test-image
+
+      - name: Show file written by container (host reads it)
+        run: |
+          echo "Contenido del archivo generado por el contenedor:"
+          cat shared-data/mensaje-desde-contenedor.txt
+
+      - name: Capture container resource usage
+        run: |
+          echo "Recolectando uso de recursos..."
+          docker stats --no-stream my-test-container > container-stats.txt
+          echo "\n\n=== Logs del contenedor ===" >> container-stats.txt
+          docker logs my-test-container >> container-stats.txt
+
+      - name: Cleanup container
+        run: docker rm my-test-container
+
+      - name: Upload resource stats artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: container-resource-stats
+          path: container-stats.txt
