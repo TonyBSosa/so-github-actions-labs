@@ -28,3 +28,30 @@ La app es simple, diseñada para probar acciones de sistema:
 ### `GET /`
 ```json
 { "message": "Aplicación CI/CD funcionando" }
+
+## 📌 Arquitectura del Pipeline CI/CD
+
+```mermaid
+flowchart TD
+    A[👨‍💻 Developer] --> B[📁 GitHub Repository]
+
+    B --> C[⚙️ CI Pipeline<br/>- Tests unitarios<br/>- Cobertura<br/>- Linter]
+    
+    C --> D[🔐 Security Scan<br/>- npm audit<br/>- Permisos de archivos]
+
+    C --> E[🖥️ Multi-OS Matrix<br/>Ubuntu / Windows / macOS]
+
+    D --> F[🚀 Release Workflow<br/>Generación de build]
+
+    F --> G[▲ Deploy automático a Vercel]
+
+    G --> H[🌎 Producción<br/>Aplicación funcionando]
+
+    style A fill:#daf7a6,stroke:#333
+    style B fill:#ffe599,stroke:#333
+    style C fill:#add8e6,stroke:#333
+    style D fill:#f8cccc,stroke:#333
+    style E fill:#d5a6bd,stroke:#333
+    style F fill:#c9daf8,stroke:#333
+    style G fill:#b6d7a8,stroke:#333
+    style H fill:#fff2cc,stroke:#333
