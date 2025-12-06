@@ -29,9 +29,6 @@ La app es simple, diseñada para probar acciones de sistema:
 ```json
 { "message": "Aplicación CI/CD funcionando" }
 
-## 📌 Arquitectura del Pipeline CI/CD
-
-```mermaid
 flowchart TD
 
     A[Developer] --> B[GitHub Repository]
@@ -56,3 +53,4 @@ flowchart TD
     style F fill:#c9daf8,stroke:#333
     style G fill:#b6d7a8,stroke:#333
     style H fill:#fff2cc,stroke:#333
+
