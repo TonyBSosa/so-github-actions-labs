@@ -1,0 +1,49 @@
+name: System Automation Workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  linux-job:
+    name: Linux Automation
+    runs-on: ubuntu-latest
+
+    env:
+      HOST_ENV_MESSAGE: "Hola desde el workflow (Linux)"
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Make scripts executable
+        run: chmod +x ./scripts/system-script.sh
+
+      - name: Run Linux script
+        run: ./scripts/system-script.sh
+
+      - name: Upload Linux report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-system-report
+          path: system-report-linux.txt
+
+  windows-job:
+    name: Windows Automation
+    runs-on: windows-latest
+
+    env:
+      HOST_ENV_MESSAGE: "Hola desde el workflow (Windows)"
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run PowerShell script
+        shell: powershell
+        run: ./scripts/system-script.ps1
+
+      - name: Upload Windows report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-system-report
+          path: system-report-windows.txt
