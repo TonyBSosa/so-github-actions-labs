@@ -1,38 +1,14 @@
 # 🚀 Proyecto CI/CD Multi-Plataforma — Sistemas Operativos & DevOps
 
-Este proyecto implementa un **pipeline CI/CD completo** utilizando:
+Este proyecto implementa un **pipeline CI/CD completo**, utilizando **GitHub Actions**, **Node.js + Express**, pruebas automatizadas con **Jest**, escaneo de seguridad, ejecución en **matriz de sistemas operativos**, automatización de contenedores y **deploy automático a Vercel** usando Webhooks.
 
-✔️ GitHub Actions  
-✔️ Node.js + Express  
-✔️ Pruebas unitarias (Jest)  
-✔️ Escaneo de seguridad (npm audit + permisos de archivos)  
-✔️ Ejecución en matriz de sistemas operativos (Ubuntu, Windows, macOS)  
-✔️ Contenedores Docker  
-✔️ Deploy automático a Vercel con Webhook  
-
-Es un proyecto integrador diseñado para demostrar conocimientos de:
-
+Es un proyecto integrador para demostrar conocimientos de:
 - Sistemas Operativos  
-- Runners y Procesos  
-- Contenedores y virtualización  
+- Procesos & Runners  
+- Contenedores  
 - CI/CD  
 - Seguridad en pipelines  
 - Automatización multiplataforma  
-
----
-
-# 📚 Tabla de Contenidos
-
-1. [Badges del Proyecto](#-badges-del-proyecto)  
-2. [Aplicación Node.js (Express)](#-aplicación-nodejs-express)  
-3. [Arquitectura del Pipeline CI/CD](#-arquitectura-del-pipeline-cicd)  
-4. [Pruebas Unitarias (Jest)](#-pruebas-unitarias-jest)  
-5. [Seguridad del Proyecto](#-seguridad-del-proyecto)  
-6. [Ejecución Multi-OS](#️-multi-os-ubuntu--windows--macos)  
-7. [Contenedores Docker](#-contenedores-docker)  
-8. [Deploy Automático a Vercel](#-deploy-automático-a-vercel)  
-9. [Estructura del Repositorio](#-estructura-del-repositorio)  
-10. [Autor](#-autor)
 
 ---
 
@@ -47,30 +23,27 @@ Es un proyecto integrador diseñado para demostrar conocimientos de:
 
 # 📦 Aplicación Node.js (Express)
 
-La aplicación es sencilla y sirve como plataforma para ejecutar pruebas del pipeline.
+La app es simple, diseñada para probar acciones de sistema:
 
-### ✔️ Endpoint principal
-
-`GET /`
-
+### `GET /`
 ```json
 { "message": "Aplicación CI/CD funcionando" }
 
 flowchart TD
 
-    A[👨‍💻 Developer] --> B[📦 GitHub Repository]
+    A[Developer] --> B[GitHub Repository]
 
-    B --> C[🧪 CI Pipeline<br/>Tests<br/>Cobertura<br/>Linter]
+    B --> C[CI Pipeline: Tests, Cobertura, Linter]
 
-    C --> D[🛡️ Security Scan<br/>npm audit<br/>Permisos de archivos]
+    C --> D[Security Scan: npm audit, Permisos de archivos]
 
-    C --> E[🖥️ Multi-OS Matrix<br/>Ubuntu · Windows · macOS]
+    C --> E[Multi-OS Matrix: Ubuntu / Windows / macOS]
 
-    D --> F[📤 Release Workflow<br/>Generación de build]
+    D --> F[Release Workflow: Generación de build]
 
-    F --> G[⚡ Deploy automático a Vercel]
+    F --> G[Deploy automático a Vercel]
 
-    G --> H[🌐 Producción<br/>Aplicación funcionando]
+    G --> H[Producción: Aplicación funcionando]
 
     style A fill:#daf7a6,stroke:#333
     style B fill:#ffe599,stroke:#333
@@ -80,3 +53,4 @@ flowchart TD
     style F fill:#c9daf8,stroke:#333
     style G fill:#b6d7a8,stroke:#333
     style H fill:#fff2cc,stroke:#333
+
