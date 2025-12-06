@@ -33,19 +33,20 @@ La app es simple, diseñada para probar acciones de sistema:
 
 ```mermaid
 flowchart TD
-    A[👨‍💻 Developer] --> B[📁 GitHub Repository]
 
-    B --> C[⚙️ CI Pipeline<br/>- Tests unitarios<br/>- Cobertura<br/>- Linter]
-    
-    C --> D[🔐 Security Scan<br/>- npm audit<br/>- Permisos de archivos]
+    A[Developer] --> B[GitHub Repository]
 
-    C --> E[🖥️ Multi-OS Matrix<br/>Ubuntu / Windows / macOS]
+    B --> C[CI Pipeline: Tests, Cobertura, Linter]
 
-    D --> F[🚀 Release Workflow<br/>Generación de build]
+    C --> D[Security Scan: npm audit, Permisos de archivos]
 
-    F --> G[▲ Deploy automático a Vercel]
+    C --> E[Multi-OS Matrix: Ubuntu / Windows / macOS]
 
-    G --> H[🌎 Producción<br/>Aplicación funcionando]
+    D --> F[Release Workflow: Generación de build]
+
+    F --> G[Deploy automático a Vercel]
+
+    G --> H[Producción: Aplicación funcionando]
 
     style A fill:#daf7a6,stroke:#333
     style B fill:#ffe599,stroke:#333
