@@ -20,37 +20,65 @@ Es un proyecto integrador para demostrar conocimientos de:
 [![Release Deploy](https://github.com/TonyBSosa/so-github-actions-labs/actions/workflows/release.yml/badge.svg)](https://github.com/TonyBSosa/so-github-actions-labs/actions/workflows/release.yml)
 
 ---
+# 🏃‍♂️ Instrucciones de Ejecución
+
+## ▶️ Ejecutar la aplicación localmente
+
+1. Clonar el repositorio:
+```bash
+git clone https://github.com/TonyBSosa/so-github-actions-labs.git
+
+cd so-github-actions-labs/so-cicd-app
+npm install
+npm start
+http://localhost:3000
+
+
+---
+🐳 Ejecutar el contenedor Docker
+docker build -t so-cicd-app .
+docker run -p 3000:3000 so-cicd-app
+---
 
 # 📦 Aplicación Node.js (Express)
 
 La app es simple, diseñada para probar acciones de sistema:
 
-### `GET /`
-```json
-{ "message": "Aplicación CI/CD funcionando" }
+ # ⚙️ Explicación de Cada Workflow
 
-flowchart TD
+A continuación se detalla la función de cada workflow dentro del pipeline CI/CD del proyecto.
 
-    A[Developer] --> B[GitHub Repository]
+---
 
-    B --> C[CI Pipeline: Tests, Cobertura, Linter]
+## 1️⃣ CI Pipeline — `ci-pipeline.yml`
 
-    C --> D[Security Scan: npm audit, Permisos de archivos]
+Este workflow se ejecuta en:
+- Ubuntu
+- Windows
+- macOS
 
-    C --> E[Multi-OS Matrix: Ubuntu / Windows / macOS]
+Con dos versiones de Node:
+- 18.x
+- 20.x
 
-    D --> F[Release Workflow: Generación de build]
+### Funciones principales:
+✔ Instala dependencias (npm ci)  
+✔ Ejecuta pruebas (npm test)  
+✔ Genera reporte de cobertura  
+✔ Corre el linter si existe  
+✔ Sube artifacts de cobertura  
+✔ Garantiza compatibilidad multi-plataforma  
 
-    F --> G[Deploy automático a Vercel]
+Este workflow valida que toda la aplicación funcione **en múltiples entornos de SO y versiones de Node**.
 
-    G --> H[Producción: Aplicación funcionando]
+---
 
-    style A fill:#daf7a6,stroke:#333
-    style B fill:#ffe599,stroke:#333
-    style C fill:#add8e6,stroke:#333
-    style D fill:#f8cccc,stroke:#333
-    style E fill:#d5a6bd,stroke:#333
-    style F fill:#c9daf8,stroke:#333
-    style G fill:#b6d7a8,stroke:#333
-    style H fill:#fff2cc,stroke:#333
+## 2️⃣ Security Scan — `security-scan.yml`
 
+Este workflow tiene dos fases:
+
+### 🔍 1. Dependency Audit
+Ejecuta:
+
+```bash
+npm audit --json
