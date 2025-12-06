@@ -9,12 +9,18 @@ on:
 jobs:
   test:
     name: Test on ${{ matrix.os }} - Node ${{ matrix.node }}
+
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         node: [18.x, 20.x]
 
     runs-on: ${{ matrix.os }}
+
+    # 👇 MUY IMPORTANTE: que todos los `run:` se ejecuten en so-cicd-app
+    defaults:
+      run:
+        working-directory: so-cicd-app
 
     steps:
       - name: Checkout repository
@@ -25,6 +31,8 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           cache: 'npm'
+          # El cache también debe apuntar a la app
+          cache-dependency-path: so-cicd-app/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -34,7 +42,7 @@ jobs:
         env:
           NODE_ENV: test
 
-      - name: Run coverage (Linux only)
+      - name: Run coverage (Linux + Node 20)
         if: matrix.os == 'ubuntu-latest' && matrix.node == '20.x'
         run: npm test -- --coverage
 
@@ -43,4 +51,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: coverage/
+          # 👇 coverage queda en so-cicd-app/coverage
+          path: so-cicd-app/coverage/
